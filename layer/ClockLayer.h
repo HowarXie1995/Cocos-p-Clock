@@ -26,6 +26,11 @@ public:
 	Sprite * _minute;		//分针
 	Sprite * _second;		//秒针
 	Sprite * _background;	//背景
+
+	/*  偏转角度  */
+	int hRotation = 0;		//时针的偏转角度
+	int mRotation = 0;		//分针的偏转角度
+	int sRotation = 0;		//秒针的偏转角度
 };
 
 #endif // !__clock__ClockLayer_h__
