@@ -1,6 +1,6 @@
 #include "ClockLayer.h"
 
-#ifdef
+#ifdef WIN32
 #pragma execution_character_set("utf-8")
 #endif
 
@@ -13,6 +13,7 @@ bool ClockLayer::init()
 	MenuItemLabel * menuItem = MenuItemLabel::create(
 				Label::createWithTTF("返回", "fonts/white.ttf", 30), 
 					CC_CALLBACK_1(ClockLayer::menuCallBack, this));
+	menuItem->setTag(103);
 		//设置位置
 	menuItem->setPosition(Vec2(winSize.width * 0.9, winSize.height * 0.9));
 		//创建菜单对象
@@ -24,46 +25,44 @@ bool ClockLayer::init()
 		/*时针精灵*/
 	_hour = Sprite::create("res/shi.png");
 			//设置位置
-	_hour->setPosition(Vec2(winSize.width / 2, winSize.length / 2));
+	_hour->setPosition(Vec2(winSize.width / 2, winSize.height / 2));
 			//设置缩放大小
 	_hour->setScale(0.3);
 			//修改锚点
-	_hour->setAnchorPoint(Vec2(0.5, 0));
+	_hour->setAnchorPoint(Vec2(0.5, 0.1));
 			//添加
 	this->addChild(_hour, 1);
 
 		/*分针精灵*/
 	_minute = Sprite::create("res/fen.png");
 			//设置位置
-	_minute->setPosition(Vec2(winSize.width / 2, winSize.length / 2));
+	_minute->setPosition(Vec2(winSize.width / 2, winSize.height / 2));
 			//设置缩放大小
 	_minute->setScale(0.3);
 			//修改锚点
-	_hour->setAnchorPoint(Vec2(0.5, 0));
+	_minute->setAnchorPoint(Vec2(0.5, 0.1));
 			//添加
 	this->addChild(_minute, 2);
 
 		/*秒针精灵*/
-	_second = Sprite::create("res/miao.jpg");
+	_second = Sprite::create("res/miao.png");
 			//设置位置
-	_second->setPosition(Vec2(winSize.width / 2, winSize.length / 2));
+	_second->setPosition(Vec2(winSize.width / 2, winSize.height / 2));
 			//设置缩放大小
 	_second->setScale(0.3);
 			//修改锚点
-	_hour->setAnchorPoint(Vec2(0.5, 0));
+	_second->setAnchorPoint(Vec2(0.5, 0.1));
 			//添加
 	this->addChild(_second, 3);
 
 		/*背景精灵*/
 	_background = Sprite::create("res/background.jpg");
 			//设置位置
-	_background->setPosition(Vec2(winSize.width / 2, winSize.length / 2));
+	_background->setPosition(Vec2(winSize.width / 2, winSize.height / 2));
 			//设置缩放大小
 	_background->setScale(0.5);
-			//修改锚点
-	_hour->setAnchorPoint(Vec2(0.5, 0));
 			//添加
-	this->addChild(_background, 4);
+	this->addChild(_background);
 
 	//4、获取当前系统的时分秒
 	struct timeval nowTimeval;
@@ -74,7 +73,7 @@ bool ClockLayer::init()
 	tm = localtime(&time_sec);
 	
 		//打印出时间进行测试
-	//CCLOG("时 = %d, 分 = %d, 秒 = %d", tm->tm_hour, tm->tm_min, tm->sec);
+	CCLOG("时 = %d, 分 = %d, 秒 = %d", tm->tm_hour, tm->tm_min, tm->tm_sec);
 
 	//5、设置偏转角度
 		//分针
@@ -118,14 +117,14 @@ void ClockLayer::timeUpdate(float dt)
 	if(360 == (int)(_second->getRotation()))
 	{
 		//分针走一刻，加6度
-		_minute->setRotation(_minute->getRotation() + 6)
+		_minute->setRotation(_minute->getRotation() + 6);
 		//秒针清零
 		_second->setRotation(0);
 		//当分针走了72度时
-		if(0 == (int)(_minute->getRotation()%72))
+		if(0 == (int)(_minute)->getRotation()%72)
 		{
 			//时针走一刻，加6度	
-			_hour->setRotation(_hour->getRotation() + 6)
+			_hour->setRotation(_hour->getRotation() + 6);
 			//当分针走了360度时
 			if(360 == (int)(_minute->getRotation()))
 			{
@@ -146,6 +145,16 @@ void ClockLayer::timeUpdate(float dt)
 //按钮回调函数
 void ClockLayer::menuCallBack(Ref * pSender)
 {
-	//跳转到菜单
-	tsm->goClockScene();
+	switch (((MenuItem *)pSender)->getTag())
+	{
+		case 103:
+		{
+			//跳转到菜单
+			tsm->goOpenScene();
+		}
+		break;
+		default:{}
+		break;
+
+	}
 }
