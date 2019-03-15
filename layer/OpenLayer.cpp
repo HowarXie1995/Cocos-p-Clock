@@ -37,7 +37,7 @@ bool OpenLayer::init()
 	menuItem_2->setTag(102);
 	menuItem_2->setPosition(Vec2(winSize.width / 2, winSize.height * 0.15));
 
-		//
+		//创建菜单对象
 	auto menu = Menu::create(menuItem, menuItem_2, NULL);
 	menu->setPosition(Point::ZERO);
 	this->addChild(menu);

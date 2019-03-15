@@ -12,7 +12,6 @@ void SceneManager::createLoadScene()
 	layer->tsm = this;
 	//3、把层添加到加载场景上
 	loadScene->addChild(layer);
-
 }
 
 void SceneManager::goOpenScene()
