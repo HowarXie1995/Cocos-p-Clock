@@ -29,7 +29,7 @@ bool ClockLayer::init()
 			//设置缩放大小
 	_hour->setScale(0.3);
 			//修改锚点
-	_hour->setAnchorPoint(Vec2(0.5, 0.1));
+	_hour->setAnchorPoint(Vec2(0.5, 0.09));
 			//添加
 	this->addChild(_hour, 1);
 
@@ -40,7 +40,7 @@ bool ClockLayer::init()
 			//设置缩放大小
 	_minute->setScale(0.3);
 			//修改锚点
-	_minute->setAnchorPoint(Vec2(0.5, 0.1));
+	_minute->setAnchorPoint(Vec2(0.5, 0.09));
 			//添加
 	this->addChild(_minute, 2);
 
@@ -51,7 +51,7 @@ bool ClockLayer::init()
 			//设置缩放大小
 	_second->setScale(0.3);
 			//修改锚点
-	_second->setAnchorPoint(Vec2(0.5, 0.1));
+	_second->setAnchorPoint(Vec2(0.5, 0.09));
 			//添加
 	this->addChild(_second, 3);
 
@@ -98,7 +98,7 @@ bool ClockLayer::init()
 		//设置到具体的精灵上
 	_hour->setRotation(hRotation);
 	_minute->setRotation(mRotation);
-	_minute->setRotation(sRotation);
+	_second->setRotation(sRotation);
 
 	//6、设置定时器，让时钟动起来
 	schedule(CC_SCHEDULE_SELECTOR(ClockLayer::timeUpdate), 1.0);
